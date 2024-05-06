@@ -1,10 +1,10 @@
 # Handwritten digit recognition for MNIST dataset using Convolutional Neural Networks
 
 # Step 1: Import all required keras libraries
-from tensorflow import keras
 
+import numpy as np
 from keras.datasets import mnist # This is used to load mnist dataset later
-from keras.utils import np_utils # This will be used to convert your test image to a categorical class (digit from 0 to 9)
+from keras.utils import to_categorical # This will be used to convert your test image to a categorical class (digit from 0 to 9)
 from keras.models import Sequential
 from keras.layers import Conv2D, MaxPooling2D, Flatten, Dense
 
@@ -22,8 +22,8 @@ def load_dataset():
     X_test = X_test / 255
     
     # 2d. Convert y_train and y_test to categorical classes - Hint: y_train = np_utils.to_categorical(y_train)
-    y_train = np_utils.to_categorical(y_train)
-    y_test = np_utils.to_categorical(y_test)
+    y_train = to_categorical(y_train)
+    y_test = to_categorical(y_test)
     
     # 2e. return your X_train, X_test, y_train, y_test
     return X_train, X_test, y_train, y_test
@@ -84,13 +84,15 @@ def load_new_image(path):
 # Step 10: load a new image and predict its class
 def test_model_performance():
     # 10a. Call the above load image function
-    img = load_new_image('digit1')
+    img = load_new_image('digit1.png')
     # 10b. load your CNN model (digitRecognizer.h5 file)
     model = load_model('digitRecognizer.h5')
-    # 10c. predict the class - Hint: imageClass = your_model_name.predict_classes(img)
-    imageClass = model.predict_classes(img)
-    # 10d. Print prediction result
-    print("Predicted Class:", imageClass[0])
+    # 10c. predict the class probabilities
+    class_probabilities = model.predict(img)
+    # 10d. Extract the class with the highest probability
+    predicted_class = np.argmax(class_probabilities)
+    # 10e. Print prediction result
+    print("Predicted Class:", predicted_class)
  
 # Step 11: Test model performance here by calling the above test_model_performance function
 test_model_performance()

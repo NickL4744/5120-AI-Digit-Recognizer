@@ -1,9 +1,11 @@
 # Handwritten digit recognition for MNIST dataset using Convolutional Neural Networks
 
 # Step 1: Import all required keras libraries
+import numpy as np
 from keras.models import load_model # This is used to load your saved model
 from keras.datasets import mnist # This is used to load mnist dataset later
-from keras.utils import np_utils # This will be used to convert your test image to a categorical class (digit from 0 to 9)
+from keras.utils import to_categorical # This will be used to convert your test image to a categorical class (digit from 0 to 9)
+#changed np_utils to to_categorical due to an error that wouldn't allow the code to run
 
 # Step 2: Load and return training and test datasets
 def load_dataset():
@@ -18,9 +20,9 @@ def load_dataset():
     X_train = X_train / 255
     X_test = X_test / 255
     
-    # 2d. Convert y_train and y_test to categorical classes - Hint: y_train = np_utils.to_categorical(y_train)
-    y_train = np_utils.to_categorical(y_train)
-    y_test = np_utils.to_categorical(y_test)
+    # 2d. Convert y_train and y_test to categorical classes - Hint: y_train = to_categorical(y_train)
+    y_train = to_categorical(y_train)
+    y_test = to_categorical(y_test)
     
     # 2e. return your X_train, X_test, y_train, y_test
     return X_train, X_test, y_train, y_test
@@ -59,12 +61,13 @@ def load_new_image(path):
 # Step 7: load a new image and predict its class
 def test_model_performance(model):
     # 7a. Call the above load image function
-    img = load_new_image('your_new_image_file_path')
-    # 7b. load your CNN model (digitRecognizer.h5 file)
-    # 7c. predict the class - Hint: imageClass = your_model_name.predict_classes(img)
-    imageClass = model.predict_classes(img)
+    img = load_new_image('digit5.png')
+    # 7b. predict the class probabilities
+    class_probabilities = model.predict(img)
+    # 7c. Extract the class with the highest probability
+    predicted_class = np.argmax(class_probabilities, axis=1)
     # 7d. Print prediction result
-    print("Predicted Class:", imageClass[0])
+    print("Predicted Class:", predicted_class[0])
  
 # Step 8: Test model performance here by calling the above test_model_performance function
 X_train, X_test, y_train, y_test = load_dataset()
