@@ -1,6 +1,7 @@
 # Handwritten digit recognition for MNIST dataset using Convolutional Neural Networks
 
 # Step 1: Import all required keras libraries
+from tensorflow import keras
 
 from keras.datasets import mnist # This is used to load mnist dataset later
 from keras.utils import np_utils # This will be used to convert your test image to a categorical class (digit from 0 to 9)
@@ -83,7 +84,7 @@ def load_new_image(path):
 # Step 10: load a new image and predict its class
 def test_model_performance():
     # 10a. Call the above load image function
-    img = load_new_image('your_new_image_file_path')
+    img = load_new_image('digit1')
     # 10b. load your CNN model (digitRecognizer.h5 file)
     model = load_model('digitRecognizer.h5')
     # 10c. predict the class - Hint: imageClass = your_model_name.predict_classes(img)
