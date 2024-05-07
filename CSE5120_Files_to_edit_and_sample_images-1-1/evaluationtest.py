@@ -61,7 +61,7 @@ def load_new_image(path):
 # Step 7: load a new image and predict its class
 def test_model_performance(model):
     # 7a. Call the above load image function
-    img = load_new_image('digit5.png')
+    img = load_new_image('digit9.png')
     # 7b. predict the class probabilities
     class_probabilities = model.predict(img)
     # 7c. Extract the class with the highest probability

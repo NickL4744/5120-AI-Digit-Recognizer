@@ -84,7 +84,7 @@ def load_new_image(path):
 # Step 10: load a new image and predict its class
 def test_model_performance():
     # 10a. Call the above load image function
-    img = load_new_image('digit1.png')
+    img = load_new_image('digit9.png')
     # 10b. load your CNN model (digitRecognizer.h5 file)
     model = load_model('digitRecognizer.h5')
     # 10c. predict the class probabilities
